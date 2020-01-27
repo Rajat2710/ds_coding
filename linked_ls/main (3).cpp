@@ -8,34 +8,28 @@ class Node {
     Node *next;
 };
 
-void at_end(Node **head_r,int key){
-    Node *new_n=new Node();
-    new_n->data=key;
-    new_n->next=NULL;
-    
-    if(*head_r==NULL){
-    *head_r=new_n;
-    return;
-    }
-    
-    Node *end=*head_r;
-    while(end->next!=NULL){
-        end=end->next;
-    }
-    end->next=new_n;
-}
-void at_st(Node **head,int key){
+void push(Node **head,int key){
     Node *new_n=new Node();
     new_n->data= key;
     new_n->next=*head;
     *head=new_n;
 }
-
-void insertAfter(Node *prev,int val){
-    Node *new_n = new Node();
-    new_n->data=val;
-    new_n->next=prev->next;
-    prev->next=new_n;
+void deleteNode(Node **head,int pos){
+    Node *temp=new Node();
+    if(pos==0){
+        *head=temp->next;
+        free(temp);
+        return;
+    }
+    
+    for(int i=0;i<pos-1 && temp!=NULL;i++){
+        temp=temp->next;
+    }
+     if(temp==NULL || temp->next==NULL)
+    return;
+    Node *next1=temp->next->next;
+    free(temp->next);
+    temp->next=next1;
 }
 void printList(Node *head){
     while(head!=NULL){
@@ -46,23 +40,19 @@ void printList(Node *head){
   int main()  
 {  
     
-    Node* head = NULL;  
-      
-     
-    at_end(&head, 6);  
-   
-    at_st(&head, 7);  
+    struct Node* head = NULL; 
   
-    at_st(&head, 1);  
-   
-    at_end(&head, 4);  
-      
+    push(&head, 7); 
+    push(&head, 1); 
+    push(&head, 3); 
+    push(&head, 2); 
+    push(&head, 8); 
   
-    insertAfter(head->next, 8);  
-      
-    cout<<"Created Linked list is: ";  
-    printList(head);  
-      
-    return 0;  
+    puts("Created Linked List: "); 
+    printList(head); 
+    deleteNode(&head, 4); 
+    puts("\nLinked List after Deletion at position 4: "); 
+    printList(head); 
+    return 0; 
 }  
 
