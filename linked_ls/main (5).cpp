@@ -1,39 +1,42 @@
 
+
 #include <iostream>
 
 using namespace std;
+
 class Node {
     public:
     int data;
     Node *next;
 };
-
-void push(Node **head,int key){
+void push(Node **head,int val){
     Node *new_n=new Node();
-    new_n->data= key;
+    new_n->data=val;
     new_n->next=*head;
     *head=new_n;
 }
 
-bool search(Node *head,int val){
-    while(head!=NULL){
-        if(head->data==val)
-        return true;
-        head=head->next;
+int printNthFromLast(Node *head_r,int loc){
+    Node *temp=head_r;
+    int l=0;
+    while(temp!=NULL) {
+    l++;
+    temp=temp->next;
     }
+    for(int i=0;i<l-loc;i++){
+       head_r=head_r->next;
+    }
+    return head_r->data;
 }
-  int main()  
-{  
-    
-   Node* head = NULL;  
-    int x = 21;  
-    push(&head, 10);  
-    push(&head, 30);  
-    push(&head, 11);  
-    push(&head, 21);  
-    push(&head, 14);  
-  
-    search(head, 21)? cout<<"Yes" : cout<<"No";  
-    return 0;  
-}  
+int main()
+{
+    struct Node* head = NULL; 
 
+    push(&head, 20); 
+    push(&head, 4); 
+    push(&head, 15); 
+    push(&head, 35); 
+  
+   cout<< printNthFromLast(head, 3); 
+    return 0; 
+}
